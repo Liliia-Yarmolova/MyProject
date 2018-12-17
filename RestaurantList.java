@@ -1,16 +1,49 @@
 package BookingRestaurant;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class RestaurantList {
-    private ArrayList<Restaurant> restaurants = new ArrayList<>();
+
+    private List<Restaurant> restaurants = new ArrayList<>();
 
     public void addRestaurant(Restaurant restaurant) {
         restaurants.add(restaurant);
     }
 
-    public ArrayList<Restaurant> findByName(String name) {
-        ArrayList<Restaurant> restaurantByName = new ArrayList<>();
+    public List<Restaurant> findBy(String field, String value) {
+
+        List<Restaurant> result = new ArrayList<>();
+
+        for (Restaurant restaurant : restaurants) {
+            if( (field.equalsIgnoreCase("name") && restaurant.getName().toLowerCase().contains(value))
+                    || (field.equalsIgnoreCase("address") && restaurant.getAddress().toLowerCase().contains(value))
+                    || (field.equalsIgnoreCase("menu") && restaurant.getMenu().equalsIgnoreCase(value)) ) {
+
+                result.add(restaurant);
+            }
+        }
+
+        return result;
+    }
+
+    private List<Restaurant> findByName(String name) {
+
+        return findBy("name", name);
+    }
+
+    private List<Restaurant> findByAddress(String address) {
+
+        return findBy("address", address);
+    }
+
+    private List<Restaurant> findByMenu(Menu menu) {
+
+        return findBy("menu", menu.getName());
+    }
+
+
+    /*public List<Restaurant> findByName(String name) {
+        List<Restaurant> restaurantByName = new ArrayList<>();
         for (Restaurant restaurant : restaurants) {
             if (restaurant.getName().equalsIgnoreCase(name)) {
                 restaurantByName.add(restaurant);
@@ -19,8 +52,8 @@ public class RestaurantList {
         return restaurantByName;
     }
 
-    public ArrayList<Restaurant> findByAddress(String address) {
-        ArrayList<Restaurant> restaurantByAddress = new ArrayList<>();
+    public List<Restaurant> findByAddress(String address) {
+        List<Restaurant> restaurantByAddress = new ArrayList<>();
         for (Restaurant restaurant : restaurants) {
             if (restaurant.getAddress().equalsIgnoreCase(address)) {
                 restaurantByAddress.add(restaurant);
@@ -29,15 +62,16 @@ public class RestaurantList {
         return restaurantByAddress;
     }
 
-    public ArrayList<Restaurant> findByMenu(Menu menu) {
-        ArrayList<Restaurant> restaurantByAddress = new ArrayList<>();
+    public List<Restaurant> findByMenu(Menu menu) {
+        List<Restaurant> restaurantByAddress = new ArrayList<>();
         for (Restaurant restaurant : restaurants) {
             if (restaurant.getMenu().getName().equalsIgnoreCase(menu.getName())) {
                 restaurantByAddress.add(restaurant);
             }
         }
         return restaurantByAddress;
-    }
+    }*/
+
 
     public String toString() {
         return "RestaurantList{" +
