@@ -1,19 +1,35 @@
 package BookingRestaurant;
 
+import static BookingRestaurant.Filter.filter;
+import static BookingRestaurant.RestaurantFinder.findByMenu;
+import static BookingRestaurant.RestaurantFinder.findByAddress;
+import static BookingRestaurant.RestaurantFinder.findByName;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class RestaurantRunner {
     public static void main(String[] args) {
-        RestaurantList restaurantList = new RestaurantList();
+        
+        List<Restaurant> restaurants = createRestaurant();
+        
+        System.out.println(filter(restaurants, findByAddress("sagaj")));
+        System.out.println(filter(restaurants, findByName("stor")));
+        System.out.println(filter(restaurants, findByMenu("kidsMenu")));
+    }
 
-        Restaurant restaurant1 = new Restaurant("Under Wonder", "Bolshaya Vasilkovskaya, 21", 380982034394L, (new Menu("Mediterranean")));
-        Restaurant restaurant2 = new Restaurant("Stories Cafe", "Konstantinovskaya 20/14", 380986575902L, (new Menu("European")));
-        Restaurant restaurant3 = new Restaurant("Fayna Familiya", "Sagajdachnogo, 25", 380444637592L, (new Menu("Kids Menu")));
-        restaurantList.addRestaurant(restaurant1);
-        restaurantList.addRestaurant(restaurant2);
-        restaurantList.addRestaurant(restaurant3);
+
+    public static List<Restaurant> createRestaurant() throws IllegalFullRestaurantException {
+        List<Restaurant> restaurants = new ArrayList<>();
+        Restaurant restaurant1 = new Restaurant("Under Wonder", "Bolshaya Vasilkovskaya, 21", 380982034394L, "kidsMenu", 1);
+        Restaurant restaurant2 = new Restaurant("Stories Cafe", "Konstantinovskaya 20/14", 380986575902L, "european", 3);
+        Restaurant restaurant3 = new Restaurant("Fayna Familiya", "Sagajdachnogo, 25", 380444637592L, "mediterranean", 2);
+        restaurants.add(restaurant1);//.addRestaurant(restaurant1);
+        restaurants.add(restaurant2);//.addRestaurant(restaurant2);
+        restaurants.add(restaurant3);//.addRestaurant(restaurant3);
 
         Menu kidsMenu = new Menu("Kids Menu");
         Menu mediterranean = new Menu("Mediterranean");
@@ -46,20 +62,15 @@ public class RestaurantRunner {
         BookList bookList1 = new BookList(LocalDate.of(2018, 12, 15), LocalTime.of(19, 00, 00, 00), customer1, 2);
         BookList bookList2 = new BookList(LocalDate.of(2018, 12, 25), LocalTime.of(18, 30, 00, 00), customer2, 4);
         BookList bookList3 = new BookList(LocalDate.of(2018, 12, 28), LocalTime.of(13, 30, 00, 00), customer2, 2);
+        try {
+            restaurant1.addOrder(bookList1);
+            restaurant2.addOrder(bookList2);
+            restaurant3.addOrder(bookList3);
+        } catch (IllegalFullRestaurantException e) {
+            System.out.println(e.getMessage());
+        }
 
-
-        restaurant1.addOrder(bookList1);
-        restaurant2.addOrder(bookList2);
-        restaurant3.addOrder(bookList3);
-
-        System.out.println("The cheapest dish is " + kidsMenu.getCheapestDish());
-        System.out.println("The cheapest dish is " + european.getCheapestDish());
-        System.out.println("The cheapest dish is " + mediterranean.getCheapestDish());
-        System.out.println(restaurant1.findByCustomer(customer1));
-        System.out.println(restaurant2.findByCustomer(customer2));
-        System.out.println(restaurantList.findByAddress("Sagajdachnogo, 25"));
-        System.out.println(restaurantList.findByMenu(mediterranean));
-        System.out.println(restaurantList.findByName("Stories Cafe"));
+        return restaurants;
 
     }
 }
