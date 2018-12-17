@@ -2,12 +2,11 @@ package BookingRestaurant;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class BookList {
-    private final LocalDate date;
-    private final LocalTime time;
-    private final Customer customer;
+    private LocalDate date;
+    private LocalTime time;
+    private Customer customer;
     private int countVisitors;
 
     public BookList(LocalDate date, LocalTime time, Customer customer, int countVisitors) {
@@ -29,17 +28,28 @@ public class BookList {
         return countVisitors;
     }
 
-    public void setCountVisitors(int countVisitors) {
-        this.countVisitors = countVisitors;
-    }
-
     public Customer getCustomer() {
         return customer;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public void setCountVisitors(int countVisitors) {
+        this.countVisitors = countVisitors;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
     public String toString() {
-        String bookListInfo = (customer + " booked place for " + countVisitors + " people on " + date + " at " + time);
-        return bookListInfo;
+        return (customer + " booked place for " + countVisitors + " people on " + date + " at " + time);
+
     }
 }
