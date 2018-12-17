@@ -1,9 +1,9 @@
 package BookingRestaurant;
 
-public class Dish {
-    private final String name;
-    private final String description;
-    private final double price;
+public class Dish implements Comparable<Dish> {
+    private String name;
+    private String description;
+    private double price;
 
     public Dish(String name, String description, double price) {
         this.name = name;
@@ -24,8 +24,32 @@ public class Dish {
         return price;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public int compareTo(Dish o) {
+        Dish dish = (Dish) o;
+        if (this.getPrice() > dish.getPrice()) {
+            return 1;
+        } else if (this.getPrice() < dish.getPrice()) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
     public String toString() {
-        String dishInfo = (name + "which consist of " + description + ". The price of this dish is: " + price);
-        return dishInfo;
+        return (name + " which consist of " + description + ". The price of this dish is: " + price);
+
     }
 }
