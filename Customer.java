@@ -1,8 +1,8 @@
 package BookingRestaurant;
 
 public class Customer {
-    private final String name;
-    private final long phone;
+    private String name;
+    private long phone;
 
     public Customer(String name, long phone) {
         this.name = name;
@@ -17,9 +17,15 @@ public class Customer {
         return phone;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(long phone) {
+        this.phone = phone;
+    }
 
     public String toString() {
-        String customerInfo = (name + " " + phone);
-        return customerInfo;
+        return (name + " " + phone);
     }
 }
